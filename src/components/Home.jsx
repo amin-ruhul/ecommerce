@@ -1,7 +1,9 @@
 import React from "react";
+import MetaData from "./MetaData";
 function Home() {
   return (
-    <div className="container container-fluid">
+    <>
+      <MetaData title="Buy the best product | My E-commerce" />
       <h1 id="products_heading">Latest Products</h1>
 
       <section id="products" className="container mt-5">
@@ -34,7 +36,7 @@ function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
 
