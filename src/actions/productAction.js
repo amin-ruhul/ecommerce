@@ -14,9 +14,7 @@ export const getProduct = () => async (dispatch) => {
       type: ALL_PRODUCT_REQUEST,
     });
 
-    const res = await axios.get(
-      "https://ecommerceapi101.herokuapp.com/api/products"
-    );
+    const res = await axios.get("/api/products");
 
     dispatch({
       type: ALL_PRODUCT_REQUEST_SUCCESS,
