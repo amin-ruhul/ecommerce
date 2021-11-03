@@ -4,3 +4,4 @@ export const ALL_PRODUCT_REQUEST_FAIL = "ALL_PRODUCT_REQUEST_FAIL";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 export const SET_ERROR = "SET_ERROR";
 export const SET_LOADING = "SET_LOADING";
+export const SET_PRODUCT = "SET_PRODUCT";

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import MetaData from "./MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../actions/productAction";
+import { getProducts } from "../actions/productAction";
 import Product from "./Product";
 
 function Home() {
@@ -10,7 +10,7 @@ function Home() {
   console.log(loading, products);
 
   useEffect(() => {
-    dispatch(getProduct());
+    dispatch(getProducts());
   }, [dispatch]);
 
   if (!loading && !products) {

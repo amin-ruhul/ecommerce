@@ -1,15 +1,16 @@
 import {
   ALL_PRODUCT_REQUEST,
   ALL_PRODUCT_REQUEST_SUCCESS,
-  ALL_PRODUCT_REQUEST_FAIL,
   SET_LOADING,
   SET_ERROR,
+  SET_PRODUCT,
 } from "../actions/types";
 
 const initialState = {
   products: null,
   error: null,
   loading: false,
+  product: null,
 };
 
 // eslint-disable-next-line
@@ -27,6 +28,13 @@ export default (state = initialState, action) => {
         products: payload,
         loading: false,
       };
+    case SET_PRODUCT:
+      return {
+        ...state,
+        loading: false,
+        product: payload,
+      };
+
     case SET_LOADING:
       return {
         ...state,
