@@ -32,8 +32,10 @@ export const getProducts = () => async (dispatch) => {
 
 // GET SINGLE PRODUCT FROM DATABASE
 export const getProduct = (id) => async (dispatch) => {
-  setLoading();
   try {
+    dispatch({
+      type: SET_LOADING,
+    });
     const res = await axios.get(`/api/product/${id}`);
     dispatch({
       type: SET_PRODUCT,

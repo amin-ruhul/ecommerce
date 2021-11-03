@@ -6,7 +6,7 @@ function ProductDetails({ match }) {
   console.log(match.params.id);
   const dispatch = useDispatch();
   const { loading, product } = useSelector((state) => state.products);
-  //console.log(loading, product);
+  console.log(loading);
 
   useEffect(() => {
     dispatch(getProduct(match.params.id));
@@ -30,18 +30,21 @@ function ProductDetails({ match }) {
           </div>
           <div className="col-12 col-lg-5 mt-5">
             <h3>{product.data.name}</h3>
-            <p id="product_id">Product # sklfjdk35fsdf5090</p>
+            <p id="product_id">Product # {product.data._id}</p>
 
             <hr />
 
             <div className="rating-outer">
-              <div className="rating-inner"></div>
+              <div
+                className="rating-inner"
+                style={{ width: `${(product.data.ratings / 5) * 100}%` }}
+              ></div>
             </div>
-            <span id="no_of_reviews">(5 Reviews)</span>
+            <span id="no_of_reviews">({product.data.numOfReview} Reviews)</span>
 
             <hr />
 
-            <p id="product_price">$108.00</p>
+            <p id="product_price"> $ {product.data.price}</p>
             <div className="stockCounter d-inline">
               <span className="btn btn-danger minus">-</span>
 
@@ -65,20 +68,19 @@ function ProductDetails({ match }) {
             <hr />
 
             <p>
-              Status: <span id="stock_status">In Stock</span>
+              Status:{" "}
+              <span
+                id="stock_status"
+                className={product.data.stock > 0 ? "greenColor" : "redColor"}
+              >
+                {product.data.stock > 0 ? "In Stock" : "Out Of Stock"}
+              </span>
             </p>
 
             <hr />
 
             <h4 className="mt-2">Description:</h4>
-            <p>
-              Binge on movies and TV episodes, news, sports, music and more! We
-              insisted on 720p High Definition for this 32" LED TV, bringing out
-              more lifelike color, texture and detail. We also partnered with
-              Roku to bring you the best possible content with thousands of
-              channels to choose from, conveniently presented through your own
-              custom home screen.
-            </p>
+            <p>{product.data.description}</p>
             <hr />
             <p id="product_seller mb-3">
               Sold by: <strong>Amazon</strong>
