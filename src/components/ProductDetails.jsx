@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../actions/productAction";
+import Loading from "./layout/Loading";
 
 function ProductDetails({ match }) {
   console.log(match.params.id);
@@ -13,7 +14,7 @@ function ProductDetails({ match }) {
   }, [dispatch, match.params.id]);
 
   if (loading) {
-    return <h1 className="text-center">Loading ...</h1>;
+    return <Loading />;
   }
 
   return (

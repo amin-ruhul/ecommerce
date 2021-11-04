@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productAction";
 import Product from "./Product";
 import Pagination from "react-js-pagination";
+import Loading from "./layout/Loading";
 
 function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,11 +20,8 @@ function Home() {
     setCurrentPage(pageNumber);
   };
 
-  if (!loading && !products) {
-    return <h1 className="text-center">waiting ...</h1>;
-  }
   if (loading) {
-    return <h1 className="text-center">Loading ...</h1>;
+    return <Loading />;
   }
 
   return (
@@ -34,7 +32,7 @@ function Home() {
       <section id="products" className="container mt-5">
         <div className="row">
           {!loading &&
-            products.data &&
+            products &&
             products.data.map((product) => (
               <Product key={product._id} product={product} />
             ))}
