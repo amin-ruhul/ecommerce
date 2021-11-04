@@ -10,14 +10,18 @@ import axios from "axios";
 
 // get all product from database
 export const getProducts =
-  (currentPage = 1) =>
+  (keyword = "", currentPage = 1) =>
   async (dispatch) => {
+    console.log("Key", keyword);
+    console.log("page", currentPage);
     try {
       dispatch({
         type: ALL_PRODUCT_REQUEST,
       });
 
-      const res = await axios.get(`/api/products?page=${currentPage}`);
+      const res = await axios.get(
+        `/api/products?keyword=${keyword}&page=${currentPage}`
+      );
 
       dispatch({
         type: ALL_PRODUCT_REQUEST_SUCCESS,

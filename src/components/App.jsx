@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./Home";
 import Footer from "./layout/Footer";
 import NavBar from "./layout/NavBar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
       <div className="container container-fluid">
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/search/:keyword" component={Home} />
           <Route exact path="/product/:id" component={ProductDetails} />
         </Switch>
       </div>

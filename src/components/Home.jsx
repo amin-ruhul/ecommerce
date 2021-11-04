@@ -6,20 +6,24 @@ import Product from "./Product";
 import Pagination from "react-js-pagination";
 import Loading from "./layout/Loading";
 
-function Home() {
+function Home({ match }) {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const { loading, products } = useSelector((state) => state.products);
-  console.log(loading, products);
 
+  const keyword = match.params.keyword;
+
+  // cal the function for fetch data
   useEffect(() => {
-    dispatch(getProducts(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(getProducts(keyword, currentPage));
+  }, [dispatch, currentPage, keyword]);
 
+  // set current page for pagination
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  // check data is ready or not
   if (loading) {
     return <Loading />;
   }
