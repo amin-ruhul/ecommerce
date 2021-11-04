@@ -5,3 +5,6 @@ export const CLEAR_ERROR = "CLEAR_ERROR";
 export const SET_ERROR = "SET_ERROR";
 export const SET_LOADING = "SET_LOADING";
 export const SET_PRODUCT = "SET_PRODUCT";
+
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
