@@ -1,17 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MetaData from "./MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productAction";
 import Product from "./Product";
+import Pagination from "react-js-pagination";
 
 function Home() {
+  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const { loading, products } = useSelector((state) => state.products);
   console.log(loading, products);
 
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProducts(currentPage));
+  }, [dispatch, currentPage]);
+
+  const setCurrentPageNo = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (!loading && !products) {
     return <h1 className="text-center">waiting ...</h1>;
@@ -34,6 +40,20 @@ function Home() {
             ))}
         </div>
       </section>
+      {!loading && products && (
+        <div className="d-flex justify-content-center mt-5">
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={products.resultPerPage}
+            totalItemsCount={products.productCount}
+            onChange={setCurrentPageNo}
+            prevPageText="Prev"
+            nextPageText="Next"
+            itemClass="page-item"
+            linkClass="page-link"
+          />
+        </div>
+      )}
     </>
   );
 }

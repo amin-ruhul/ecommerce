@@ -9,26 +9,28 @@ import {
 import axios from "axios";
 
 // get all product from database
-export const getProducts = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: ALL_PRODUCT_REQUEST,
-    });
+export const getProducts =
+  (currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: ALL_PRODUCT_REQUEST,
+      });
 
-    const res = await axios.get("/api/products");
+      const res = await axios.get(`/api/products?page=${currentPage}`);
 
-    dispatch({
-      type: ALL_PRODUCT_REQUEST_SUCCESS,
-      payload: res.data,
-    });
-  } catch (error) {
-    console.log(error.message);
-    dispatch({
-      type: SET_ERROR,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: ALL_PRODUCT_REQUEST_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      dispatch({
+        type: SET_ERROR,
+        payload: error.message,
+      });
+    }
+  };
 
 // GET SINGLE PRODUCT FROM DATABASE
 export const getProduct = (id) => async (dispatch) => {
