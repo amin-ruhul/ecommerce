@@ -8,6 +8,7 @@ import {
   REGISTER_FAIL,
 } from "./types";
 
+//********************login user *************** */
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -40,7 +41,34 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// clear the existing error
+//************** Register user ******************** */
+export const register = (userData) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "multipart",
+      },
+    };
+
+    const res = axios.post(
+      "https://ecommerceapi101.herokuapp.com/api/user/register",
+      userData,
+      config
+    );
+
+    dispatch({
+      type: REGISTER_USER,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// ***************clear the existing error***************
 export const clearError = () => (dispatch) => {
   dispatch({
     type: CLEAR_ERROR,
