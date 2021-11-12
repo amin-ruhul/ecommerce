@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import Search from "./Search";
 
 function NavBar() {
@@ -16,9 +16,9 @@ function NavBar() {
       </div>
 
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        <button className="btn" id="login_btn">
+        <Link to="/login" className="btn" id="login_btn">
           Login
-        </button>
+        </Link>
 
         <span id="cart" className="ml-3">
           Cart

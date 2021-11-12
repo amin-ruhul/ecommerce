@@ -1,5 +1,12 @@
 import axios from "axios";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, SET_ERROR } from "./types";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  SET_ERROR,
+  CLEAR_ERROR,
+  REGISTER_USER,
+  REGISTER_FAIL,
+} from "./types";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -13,20 +20,29 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      "/api/user/login",
-      { email, password },
+    const data = { email, password };
+    const res = await axios.post(
+      "https://ecommerceapi101.herokuapp.com/api/user/login",
+      data,
       config
     );
-
+    console.log("data", res.data);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: data.user,
     });
   } catch (error) {
+    console.log("Error", error.response.data.error);
+
     dispatch({
       type: SET_ERROR,
-      payload: error.response.data.message,
+      payload: error.response.data.error,
     });
   }
+};
+
+// clear the existing error
+export const clearError = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ERROR,
+  });
 };

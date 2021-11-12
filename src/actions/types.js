@@ -8,3 +8,5 @@ export const SET_PRODUCT = "SET_PRODUCT";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const REGISTER_USER = "REGISTER_USER";
+export const REGISTER_FAIL = "REGISTER_FAIL";
