@@ -22,11 +22,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const data = { email, password };
-    const res = await axios.post(
-      "https://ecommerceapi101.herokuapp.com/api/user/login",
-      data,
-      config
-    );
+    const res = await axios.post("/api/user/login", data, config);
     console.log("data", res.data);
     dispatch({
       type: LOGIN_SUCCESS,
@@ -50,11 +46,7 @@ export const register = (userData) => async (dispatch) => {
       },
     };
 
-    const res = axios.post(
-      "https://ecommerceapi101.herokuapp.com/api/user/register",
-      userData,
-      config
-    );
+    const res = await axios.post("/api/user/register", userData, config);
 
     dispatch({
       type: REGISTER_USER,
