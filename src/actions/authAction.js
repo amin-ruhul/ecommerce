@@ -6,6 +6,8 @@ import {
   CLEAR_ERROR,
   REGISTER_USER,
   REGISTER_FAIL,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
 } from "./types";
 
 //********************login user *************** */
@@ -55,6 +57,23 @@ export const register = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REGISTER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+/************** load logged in user ******************** */
+export const loadUser = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/user");
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_USER_FAIL,
       payload: error.response.data.error,
     });
   }

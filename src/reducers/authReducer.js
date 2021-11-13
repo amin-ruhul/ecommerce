@@ -5,6 +5,8 @@ import {
   CLEAR_ERROR,
   REGISTER_USER,
   REGISTER_FAIL,
+  LOAD_USER_FAIL,
+  LOAD_USER_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -43,6 +45,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
+      };
+    case LOAD_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+        user: payload,
+        error: null,
+      };
+    case LOAD_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        error: payload,
       };
 
     default:
