@@ -3,6 +3,8 @@ import {
   LOGIN_SUCCESS,
   SET_ERROR,
   CLEAR_ERROR,
+  REGISTER_USER,
+  REGISTER_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +25,7 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case LOGIN_SUCCESS:
+    case REGISTER_USER:
       return {
         ...state,
         isAuthenticated: true,
@@ -31,6 +34,7 @@ export default (state = initialState, action) => {
         user: payload,
       };
     case SET_ERROR:
+    case REGISTER_FAIL:
       return {
         ...state,
         error: payload,

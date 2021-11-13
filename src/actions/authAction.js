@@ -46,7 +46,7 @@ export const register = (userData) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        "Content-Type": "multipart",
+        "Content-Type": "multipart/form-data",
       },
     };
 
