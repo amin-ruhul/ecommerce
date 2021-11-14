@@ -9,6 +9,7 @@ import Register from "./user/Register";
 import { loadUser } from "../actions/authAction";
 
 import store from "../store";
+import Profile from "./user/Profile";
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/search/:keyword" component={Home} />
           <Route exact path="/product/:id" component={ProductDetails} />
+          <Route exact path="/profile" component={Profile} />
         </Switch>
       </div>
 
