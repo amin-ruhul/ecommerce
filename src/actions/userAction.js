@@ -1,6 +1,12 @@
 import axios from "axios";
-import { UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL } from "./types";
+import {
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  CLEAR_ERROR,
+  UPDATE_PROFILE_RESET,
+} from "./types";
 
+//************** update user profile */
 export const updateProfile = (userData) => async (dispatch) => {
   try {
     const config = {
@@ -20,4 +26,18 @@ export const updateProfile = (userData) => async (dispatch) => {
       payload: error.response.data.error,
     });
   }
+};
+
+//************* reset update profile state */
+export const resetUpdatedState = () => (dispatch) => {
+  dispatch({
+    type: UPDATE_PROFILE_RESET,
+  });
+};
+
+//************ clear the existing error */
+export const clearError = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_ERROR,
+  });
 };
