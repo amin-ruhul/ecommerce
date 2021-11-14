@@ -7,15 +7,14 @@ import ProductDetails from "./ProductDetails";
 import Login from "./user/Login";
 import Register from "./user/Register";
 import { loadUser } from "../actions/authAction";
-import { useDispatch } from "react-redux";
+
+import store from "../store";
 
 function App() {
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(loadUser());
-    console.log("hello from app");
-  }, [dispatch]);
+    store.dispatch(loadUser());
+    console.log("Hello from app");
+  }, []);
 
   return (
     <Router>

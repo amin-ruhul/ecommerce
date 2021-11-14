@@ -8,6 +8,7 @@ import {
   REGISTER_FAIL,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT,
 } from "./types";
 
 //********************login user *************** */
@@ -24,14 +25,14 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const data = { email, password };
-    const res = await axios.post("/api/user/login", data, config);
-    console.log("data", res.data);
+    await axios.post("/api/user/login", data, config);
+    const res = await axios.get("/api/user");
+
     dispatch({
       type: LOGIN_SUCCESS,
+      payload: res.data,
     });
   } catch (error) {
-    console.log("Error", error.response.data.error);
-
     dispatch({
       type: SET_ERROR,
       payload: error.response.data.error,
@@ -48,7 +49,8 @@ export const register = (userData) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post("/api/user/register", userData, config);
+    await axios.post("/api/user/register", userData, config);
+    const res = await axios.get("/api/user");
 
     dispatch({
       type: REGISTER_USER,
@@ -74,6 +76,21 @@ export const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_USER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//********************** LOGOUT USER **************/
+export const logout = () => (dispatch) => {
+  try {
+    axios.get("/api/user/logout");
+    dispatch({
+      type: LOGOUT,
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_ERROR,
       payload: error.response.data.error,
     });
   }

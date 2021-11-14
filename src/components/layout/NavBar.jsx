@@ -1,12 +1,14 @@
 import React from "react";
 import { Link, Route } from "react-router-dom";
 import Search from "./Search";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../actions/authAction";
 
 function NavBar() {
+  const dispatch = useDispatch();
+
   const { user, loading } = useSelector((state) => state.auth);
 
-  console.log(user);
   return (
     <nav className="navbar row">
       <div className="col-12 col-md-3">
@@ -68,7 +70,11 @@ function NavBar() {
               <Link className="dropdown-item " to="/order">
                 Order
               </Link>
-              <Link className="dropdown-item text-danger" to="/">
+              <Link
+                className="dropdown-item text-danger"
+                to="/"
+                onClick={() => dispatch(logout())}
+              >
                 Logout
               </Link>
             </div>

@@ -7,6 +7,7 @@ import {
   REGISTER_FAIL,
   LOAD_USER_FAIL,
   LOAD_USER_SUCCESS,
+  LOGOUT,
 } from "../actions/types";
 
 const initialState = {
@@ -61,6 +62,14 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         user: null,
         error: payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        error: null,
       };
 
     default:

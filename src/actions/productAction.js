@@ -12,8 +12,6 @@ import axios from "axios";
 export const getProducts =
   (keyword = "", currentPage = 1) =>
   async (dispatch) => {
-    console.log("Key", keyword);
-    console.log("page", currentPage);
     try {
       dispatch({
         type: ALL_PRODUCT_REQUEST,
@@ -28,7 +26,6 @@ export const getProducts =
         payload: res.data,
       });
     } catch (error) {
-      console.log(error.message);
       dispatch({
         type: SET_ERROR,
         payload: error.message,
