@@ -8,6 +8,7 @@ function NavBar() {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   return (
     <nav className="navbar row">
@@ -22,12 +23,12 @@ function NavBar() {
       </div>
 
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        <Link to="/card" style={{ textDecoration: "none" }}>
+        <Link to="/cart" style={{ textDecoration: "none" }}>
           <span id="cart" className="mr-2">
             Cart
           </span>
           <span className="mr-3" id="cart_count">
-            2
+            {cartItems ? cartItems.length : 0}
           </span>
         </Link>
 
