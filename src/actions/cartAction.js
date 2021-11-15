@@ -1,10 +1,10 @@
 import axios from "axios";
-import { ADD_TO_CART } from "./types";
+import { ADD_TO_CART, REMOVE_ITEM } from "./types";
 
+//******************* item add to cart */
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
   try {
     const { data } = await axios.get(`/api/product/${id}`);
-    console.log(id, quantity);
     dispatch({
       type: ADD_TO_CART,
       payload: {
@@ -23,5 +23,23 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
     );
   } catch (error) {
     console.error(error);
+  }
+};
+
+//******************* remove cart item *************/
+export const removeFromCart = (id) => async (dispatch, getState) => {
+  try {
+    //const { data } = await axios.get(`/api/product/${id}`);
+    dispatch({
+      type: REMOVE_ITEM,
+      payload: id,
+    });
+
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  } catch (error) {
+    console.log(error);
   }
 };

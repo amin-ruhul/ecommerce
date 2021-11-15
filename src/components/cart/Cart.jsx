@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../actions/cartAction";
+import { addToCart, removeFromCart } from "../../actions/cartAction";
 import { useAlert } from "react-alert";
 
 function Cart() {
@@ -26,6 +26,10 @@ function Cart() {
     dispatch(addToCart(id, newQut));
   };
 
+  const removeItem = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
   if (cartItems.length === 0) {
     return <h2 className="mt-20"> Not Item In the cart</h2>;
   }
@@ -39,7 +43,7 @@ function Cart() {
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8">
               {cartItems.map((item) => (
-                <>
+                <div key={item.product}>
                   <hr />
                   <div className="cart-item" key={item.product}>
                     <div className="row">
@@ -96,11 +100,12 @@ function Cart() {
                         <i
                           id="delete_cart_item"
                           className="fa fa-trash btn btn-danger"
+                          onClick={() => removeItem(item.product)}
                         ></i>
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               ))}
 
               <hr />
