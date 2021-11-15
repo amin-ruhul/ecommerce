@@ -66,7 +66,11 @@ function UpdateProfile({ history }) {
   return (
     <div className="row wrapper">
       <div className="col-10 col-lg-5">
-        <form className="shadow-lg" encType="multipart/form-data">
+        <form
+          className="shadow-lg"
+          encType="multipart/form-data"
+          onSubmit={handelSubmit}
+        >
           <h1 className="mt-2 mb-5">Update Profile</h1>
 
           <div className="form-group">
