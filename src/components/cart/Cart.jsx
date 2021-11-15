@@ -1,9 +1,30 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../actions/cartAction";
+import { useAlert } from "react-alert";
 
 function Cart() {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const alert = useAlert();
+
+  const increaseQuantity = (id, quantity, stock) => {
+    const newQut = quantity + 1;
+    if (newQut > stock) {
+      alert.show(`Only ${quantity} Product Available`);
+      return;
+    }
+    dispatch(addToCart(id, newQut));
+  };
+
+  const decreaseQuantity = (id, quantity) => {
+    const newQut = quantity - 1;
+    if (newQut <= 0) {
+      alert.info(`No allow to buy less then 1 product`);
+      return;
+    }
+    dispatch(addToCart(id, newQut));
+  };
 
   if (cartItems.length === 0) {
     return <h2 className="mt-20"> Not Item In the cart</h2>;
@@ -20,7 +41,7 @@ function Cart() {
               {cartItems.map((item) => (
                 <>
                   <hr />
-                  <div className="cart-item">
+                  <div className="cart-item" key={item.product}>
                     <div className="row">
                       <div className="col-4 col-lg-3">
                         <img
@@ -41,7 +62,14 @@ function Cart() {
 
                       <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                         <div className="stockCounter d-inline">
-                          <span className="btn btn-danger minus">-</span>
+                          <span
+                            className="btn btn-danger minus"
+                            onClick={() =>
+                              decreaseQuantity(item.product, item.quantity)
+                            }
+                          >
+                            -
+                          </span>
                           <input
                             type="number"
                             className="form-control count d-inline"
@@ -49,7 +77,18 @@ function Cart() {
                             readOnly
                           />
 
-                          <span className="btn btn-primary plus">+</span>
+                          <span
+                            className="btn btn-primary plus"
+                            onClick={() =>
+                              increaseQuantity(
+                                item.product,
+                                item.quantity,
+                                item.stock
+                              )
+                            }
+                          >
+                            +
+                          </span>
                         </div>
                       </div>
 

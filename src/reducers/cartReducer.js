@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
   switch (type) {
     case ADD_TO_CART:
       const item = payload;
+      console.log(item);
       const isExisted = state.cartItems.find(
         (itm) => itm.product === item.product
       );
@@ -19,7 +20,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           cartItems: state.cartItems.map((itm) =>
-            item.product === isExisted ? item : itm
+            itm.product === isExisted.product ? item : itm
           ),
         };
       } else {
