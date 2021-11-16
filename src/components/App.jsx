@@ -13,6 +13,7 @@ import Profile from "./user/Profile";
 import ProtectedRoute from "./route/ProtectedRoute";
 import Cart from "./cart/Cart";
 import Shiping from "./cart/Shiping";
+import ConfirmOrder from "./cart/ConfirmOrder";
 
 function App() {
   useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
 
           <ProtectedRoute exact path="/shiping" component={Shiping} />
           <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute exact path="/confirm" component={ConfirmOrder} />
         </Switch>
       </div>
 
