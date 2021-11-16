@@ -4,7 +4,7 @@ import { useAlert } from "react-alert";
 import { login, clearError } from "../../actions/authAction";
 import { Link } from "react-router-dom";
 
-function Login({ history }) {
+function Login({ history, location }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -14,16 +14,18 @@ function Login({ history }) {
   console.log(isAuthenticated, loading);
   const alert = useAlert();
 
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
     if (isAuthenticated) {
-      history.push("/");
+      history.push(redirect);
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearError());
     }
-  }, [dispatch, isAuthenticated, error, history, alert]);
+  }, [dispatch, isAuthenticated, error, history, alert, redirect]);
 
   const handelSubmit = (e) => {
     e.preventDefault();

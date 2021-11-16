@@ -12,6 +12,7 @@ import store from "../store";
 import Profile from "./user/Profile";
 import ProtectedRoute from "./route/ProtectedRoute";
 import Cart from "./cart/Cart";
+import Shiping from "./cart/Shiping";
 
 function App() {
   useEffect(() => {
@@ -29,8 +30,10 @@ function App() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/search/:keyword" component={Home} />
           <Route exact path="/product/:id" component={ProductDetails} />
-          <ProtectedRoute exact path="/profile" component={Profile} />
           <Route exact path="/cart" component={Cart} />
+
+          <ProtectedRoute exact path="/shiping" component={Shiping} />
+          <ProtectedRoute exact path="/profile" component={Profile} />
         </Switch>
       </div>
 

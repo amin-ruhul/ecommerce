@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartAction";
 import { useAlert } from "react-alert";
 
-function Cart() {
+function Cart({ history }) {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const alert = useAlert();
@@ -28,6 +28,10 @@ function Cart() {
 
   const removeItem = (id) => {
     dispatch(removeFromCart(id));
+  };
+
+  const checkOutHandler = () => {
+    history.push("/login?redirect=shiping");
   };
 
   if (cartItems.length === 0) {
@@ -139,7 +143,11 @@ function Cart() {
                 </p>
 
                 <hr />
-                <button id="checkout_btn" className="btn btn-primary btn-block">
+                <button
+                  id="checkout_btn"
+                  className="btn btn-primary btn-block"
+                  onClick={checkOutHandler}
+                >
                   Check out
                 </button>
               </div>

@@ -1,5 +1,10 @@
 import axios from "axios";
-import { ADD_TO_CART, REMOVE_ITEM } from "./types";
+import {
+  ADD_TO_CART,
+  REMOVE_ITEM,
+  SAVE_SHIPING_INFO,
+  SET_ERROR,
+} from "./types";
 
 //******************* item add to cart */
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
@@ -23,13 +28,16 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
     );
   } catch (error) {
     console.error(error);
+    dispatch({
+      type: SET_ERROR,
+      payload: error.response.data.error,
+    });
   }
 };
 
 //******************* remove cart item *************/
 export const removeFromCart = (id) => async (dispatch, getState) => {
   try {
-    //const { data } = await axios.get(`/api/product/${id}`);
     dispatch({
       type: REMOVE_ITEM,
       payload: id,
@@ -40,6 +48,26 @@ export const removeFromCart = (id) => async (dispatch, getState) => {
       JSON.stringify(getState().cart.cartItems)
     );
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: SET_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//**************** SAVE SHIPING INFO ****************/
+export const saveShipingInfo = (data) => (dispatch) => {
+  try {
+    dispatch({
+      type: SAVE_SHIPING_INFO,
+      payload: data,
+    });
+
+    localStorage.setItem("shipingInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: SET_ERROR,
+      payload: error.response.data.error,
+    });
   }
 };
