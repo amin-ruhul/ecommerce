@@ -20,6 +20,15 @@ function ConfirmOrder({ history }) {
   let total = subtotal + shipping + tax;
 
   const handelClick = () => {
+    const data = {
+      itemsPrice: subtotal.toFixed(2),
+      shipping,
+      tax,
+      total,
+    };
+
+    sessionStorage.setItem("orderInfo", JSON.stringify(data));
+
     history.push("/payment");
   };
 
