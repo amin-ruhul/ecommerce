@@ -1,9 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CheckoutSteps from "./CheckoutSteps";
-import { Link } from "react-router-dom";
 
-function ConfirmOrder() {
+function ConfirmOrder({ history }) {
   const { shipingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
   console.log(user, shipingInfo);
@@ -19,6 +18,10 @@ function ConfirmOrder() {
   let tax = Number((0.02 * subtotal).toFixed(2));
 
   let total = subtotal + shipping + tax;
+
+  const handelClick = () => {
+    history.push("/payment");
+  };
 
   return (
     <>
@@ -92,7 +95,11 @@ function ConfirmOrder() {
             </p>
 
             <hr />
-            <button id="checkout_btn" className="btn btn-primary btn-block">
+            <button
+              id="checkout_btn"
+              className="btn btn-primary btn-block"
+              onClick={handelClick}
+            >
               Proceed to Payment
             </button>
           </div>

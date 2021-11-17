@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import Footer from "./layout/Footer";
 import NavBar from "./layout/NavBar";
@@ -14,11 +14,23 @@ import ProtectedRoute from "./route/ProtectedRoute";
 import Cart from "./cart/Cart";
 import Shiping from "./cart/Shiping";
 import ConfirmOrder from "./cart/ConfirmOrder";
+import axios from "axios";
+import Payment from "./cart/Payment";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
+  const [stripeApiKay, setStripeApiKay] = useState("");
+  console.log("Api", stripeApiKay);
+
+  const getStripeApiKey = async () => {
+    const { data } = await axios.get("/api/payment/stripe/key");
+    setStripeApiKay(data.stripeApiKay);
+  };
+
   useEffect(() => {
     store.dispatch(loadUser());
-    console.log("Hello from app");
+    getStripeApiKey();
   }, []);
 
   return (
@@ -36,6 +48,12 @@ function App() {
           <ProtectedRoute exact path="/shiping" component={Shiping} />
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/confirm" component={ConfirmOrder} />
+
+          {stripeApiKay && (
+            <Elements stripe={loadStripe(stripeApiKay)}>
+              <ProtectedRoute exact path="/payment" component={Payment} />
+            </Elements>
+          )}
         </Switch>
       </div>
 
