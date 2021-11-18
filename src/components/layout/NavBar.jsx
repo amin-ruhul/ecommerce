@@ -13,9 +13,11 @@ function NavBar() {
   return (
     <nav className="navbar row">
       <div className="col-12 col-md-3">
-        <div className="navbar-brand">
-          <h2 className="text-white">Ecom</h2>
-        </div>
+        <Link to="/">
+          <div className="navbar-brand">
+            <h2 className="text-white">Ecom</h2>
+          </div>
+        </Link>
       </div>
 
       <div className="col-12 col-md-6 mt-2 mt-md-0">

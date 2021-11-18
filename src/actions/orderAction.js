@@ -3,6 +3,9 @@ import {
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAIL,
   CLEAR_ERROR,
+  LOAD_ORDER_REQUEST,
+  LOAD_ORDER_SUCCESS,
+  LOAD_ORDER_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -26,6 +29,25 @@ export const createNewOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//********* load orders from database */
+export const getMyOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_ORDER_REQUEST });
+
+    const { data } = await axios.get("/api/order/myorder");
+
+    dispatch({
+      type: LOAD_ORDER_SUCCESS,
+      payload: data.orders,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_ORDER_FAIL,
       payload: error.response.data.message,
     });
   }
