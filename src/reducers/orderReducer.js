@@ -6,6 +6,9 @@ import {
   LOAD_ORDER_FAIL,
   LOAD_ORDER_REQUEST,
   LOAD_ORDER_SUCCESS,
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_SUCCESS,
+  ORDER_DETAILS_FAIL,
 } from "../actions/types";
 
 const initialSate = {
@@ -21,6 +24,7 @@ export default (state = initialSate, action) => {
   switch (type) {
     case CREATE_ORDER_REQUEST:
     case LOAD_ORDER_REQUEST:
+    case ORDER_DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
@@ -54,6 +58,20 @@ export default (state = initialSate, action) => {
         ...state,
         loading: false,
         error: null,
+      };
+    case ORDER_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+        order: {},
+      };
+    case ORDER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        order: payload,
       };
 
     default:
