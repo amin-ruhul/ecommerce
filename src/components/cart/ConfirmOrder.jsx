@@ -58,7 +58,7 @@ function ConfirmOrder({ history }) {
 
           {cartItems &&
             cartItems.map((item) => (
-              <div className="cart-item my-1">
+              <div key={item.name} className="cart-item my-1">
                 <div className="row">
                   <div className="col-4 col-lg-2">
                     <img src={item.image} alt="Laptop" height="45" width="65" />
