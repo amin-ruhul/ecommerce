@@ -18,6 +18,7 @@ import axios from "axios";
 import Payment from "./cart/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Success from "./cart/Success";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -48,6 +49,7 @@ function App() {
           <ProtectedRoute exact path="/shiping" component={Shiping} />
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/confirm" component={ConfirmOrder} />
+          <ProtectedRoute exact path="/success" component={Success} />
 
           {stripeApiKay && (
             <Elements stripe={loadStripe(stripeApiKay)}>

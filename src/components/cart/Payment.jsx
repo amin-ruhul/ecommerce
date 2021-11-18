@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "./CheckoutSteps";
+import { createNewOrder, clearError } from "../../actions/orderAction";
 import {
   useStripe,
   useElements,
@@ -26,13 +27,18 @@ function Payment({ history }) {
   const stripe = useStripe();
   const dispatch = useDispatch();
   const elements = useElements();
-  const butRef = useRef();
   const alert = useAlert();
 
   const { user } = useSelector((state) => state.auth);
   const { shipingInfo, cartItems } = useSelector((state) => state.cart);
+  const { error } = useSelector((state) => state.order);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearError());
+    }
+  }, [dispatch, error, alert]);
 
   const orderInfo = sessionStorage.getItem("orderInfo")
     ? JSON.parse(sessionStorage.getItem("orderInfo"))
@@ -40,6 +46,15 @@ function Payment({ history }) {
 
   const paymentData = {
     amount: orderInfo ? Math.round(orderInfo.total * 100) : "",
+  };
+
+  const order = {
+    shippingInfo: shipingInfo,
+    orderItems: cartItems,
+    itemPrice: orderInfo && orderInfo.itemsPrice,
+    tax: orderInfo && orderInfo.tax,
+    totalPrice: orderInfo && orderInfo.total,
+    deliveryCharge: orderInfo && orderInfo.shipping,
   };
 
   const submitHandler = async (e) => {
@@ -74,6 +89,13 @@ function Payment({ history }) {
         document.querySelector("#pay_btn").disabled = false;
       } else {
         if (result.paymentIntent.status === "succeeded") {
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+          };
+
+          dispatch(createNewOrder(order));
+
           history.push("/success");
         } else {
           alert.error("Failed to process payment");
