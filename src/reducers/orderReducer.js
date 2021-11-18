@@ -13,7 +13,7 @@ import {
 
 const initialSate = {
   loading: false,
-  order: {},
+  order: null,
   orders: [],
   error: null,
 };
@@ -42,7 +42,7 @@ export default (state = initialSate, action) => {
       return {
         ...state,
         loading: false,
-        order: {},
+        order: null,
         orders: [],
         error: payload,
       };
@@ -64,7 +64,7 @@ export default (state = initialSate, action) => {
         ...state,
         loading: false,
         error: payload,
-        order: {},
+        order: null,
       };
     case ORDER_DETAILS_SUCCESS:
       return {
