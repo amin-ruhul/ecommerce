@@ -70,8 +70,8 @@ function NavBar() {
               <Link className="dropdown-item " to="/profile">
                 Profile
               </Link>
-              <Link className="dropdown-item " to="/order">
-                Order
+              <Link className="dropdown-item " to="/orders">
+                Orders
               </Link>
               <Link
                 className="dropdown-item text-danger"
