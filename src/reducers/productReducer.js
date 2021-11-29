@@ -4,6 +4,7 @@ import {
   SET_LOADING,
   SET_ERROR,
   SET_PRODUCT,
+  CLEAR_ERROR,
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_FAIL,
@@ -67,6 +68,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

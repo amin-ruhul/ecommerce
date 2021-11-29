@@ -8,7 +8,6 @@ import {
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_FAIL,
-  NEW_REVIEW_RESET,
 } from "./types";
 import axios from "axios";
 
@@ -57,8 +56,9 @@ export const getProduct = (id) => async (dispatch) => {
 };
 
 // *********  handel product review  ***************
-export const productReview = (data) => async (dispatch) => {
+export const productReview = (userData) => async (dispatch) => {
   try {
+    console.log("hello from product review");
     dispatch({ type: NEW_REVIEW_REQUEST });
 
     const config = {
@@ -67,11 +67,12 @@ export const productReview = (data) => async (dispatch) => {
       },
     };
 
-    const { res } = await axios.put("/api/product/review", data, config);
+    const { data } = await axios.put("/api/review/product", userData, config);
+    console.log("res", data);
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
-      payload: res.success,
+      payload: data.success,
     });
   } catch (error) {
     dispatch({

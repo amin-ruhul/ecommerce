@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct } from "../actions/productAction";
+import {
+  getProduct,
+  clearError,
+  productReview,
+} from "../actions/productAction";
 import { addToCart } from "../actions/cartAction";
 import Loading from "./layout/Loading";
 import { useAlert } from "react-alert";
@@ -9,12 +13,28 @@ function ProductDetails({ match }) {
   const alert = useAlert();
   const [count, setCount] = useState(1);
   const [quantity, setQuantity] = useState(1);
+
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   const dispatch = useDispatch();
-  const { loading, product } = useSelector((state) => state.products);
+  const { error, isReviewSuccess, loading, product } = useSelector(
+    (state) => state.products
+  );
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearError());
+    }
+
+    if (isReviewSuccess) {
+      alert.success("Review Posted successfully");
+    }
+
     dispatch(getProduct(match.params.id));
-  }, [dispatch, match.params.id]);
+  }, [dispatch, match.params.id, alert, error, isReviewSuccess]);
 
   if (loading) {
     return <Loading />;
@@ -41,6 +61,54 @@ function ProductDetails({ match }) {
   const handelCard = () => {
     dispatch(addToCart(match.params.id, quantity));
     alert.success("Product Added to cart");
+  };
+
+  function setUserRatings() {
+    const stars = document.querySelectorAll(".star");
+
+    stars.forEach((star, index) => {
+      star.starValue = index + 1;
+
+      ["click", "mouseover", "mouseout"].forEach(function (e) {
+        star.addEventListener(e, showRatings);
+      });
+    });
+
+    function showRatings(e) {
+      stars.forEach((star, index) => {
+        if (e.type === "click") {
+          if (index < this.starValue) {
+            star.classList.add("orange");
+
+            setRating(this.starValue);
+          } else {
+            star.classList.remove("orange");
+          }
+        }
+
+        if (e.type === "mouseover") {
+          if (index < this.starValue) {
+            star.classList.add("yellow");
+          } else {
+            star.classList.remove("yellow");
+          }
+        }
+
+        if (e.type === "mouseout") {
+          star.classList.remove("yellow");
+        }
+      });
+    }
+  }
+
+  const reviewHandler = () => {
+    const data = {
+      rating,
+      comment,
+      productId: match.params.id,
+    };
+
+    dispatch(productReview(data));
   };
 
   return (
@@ -119,15 +187,22 @@ function ProductDetails({ match }) {
               Sold by: <strong>Amazon</strong>
             </p>
 
-            <button
-              id="review_btn"
-              type="button"
-              className="btn btn-primary mt-4"
-              data-toggle="modal"
-              data-target="#ratingModal"
-            >
-              Submit Your Review
-            </button>
+            {isAuthenticated ? (
+              <button
+                id="review_btn"
+                type="button"
+                className="btn btn-primary mt-4"
+                data-toggle="modal"
+                data-target="#ratingModal"
+                onClick={setUserRatings}
+              >
+                Submit Your Review
+              </button>
+            ) : (
+              <div className="alert alert-danger mt-t" type="alert">
+                Login to submit review
+              </div>
+            )}
 
             <div className="row mt-2 mb-5">
               <div className="rating w-50">
@@ -177,11 +252,15 @@ function ProductDetails({ match }) {
                           name="review"
                           id="review"
                           className="form-control mt-3"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
                         ></textarea>
                         <button
                           className="btn my-3 float-right review-btn px-4 text-white"
                           data-dismiss="modal"
                           aria-label="Close"
+                          type="submit"
+                          onClick={reviewHandler}
                         >
                           {" "}
                           submit
