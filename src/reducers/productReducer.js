@@ -4,6 +4,10 @@ import {
   SET_LOADING,
   SET_ERROR,
   SET_PRODUCT,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  NEW_REVIEW_RESET,
 } from "../actions/types";
 
 const initialState = {
@@ -11,6 +15,7 @@ const initialState = {
   error: null,
   loading: false,
   product: null,
+  isReviewSuccess: false,
 };
 
 // eslint-disable-next-line
@@ -35,12 +40,30 @@ export default (state = initialState, action) => {
         product: payload,
       };
 
+    case NEW_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case NEW_REVIEW_SUCCESS:
+      return {
+        ...state,
+        isReviewSuccess: payload,
+      };
+
+    case NEW_REVIEW_RESET:
+      return {
+        ...state,
+        isReviewSuccess: false,
+      };
     case SET_LOADING:
       return {
         ...state,
         loading: true,
       };
     case SET_ERROR:
+    case NEW_REVIEW_FAIL:
       return {
         ...state,
         error: payload,

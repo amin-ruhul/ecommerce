@@ -5,6 +5,10 @@ import {
   SET_ERROR,
   CLEAR_ERROR,
   SET_LOADING,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAIL,
+  NEW_REVIEW_RESET,
 } from "./types";
 import axios from "axios";
 
@@ -28,7 +32,7 @@ export const getProducts =
     } catch (error) {
       dispatch({
         type: SET_ERROR,
-        payload: error.message,
+        payload: error.response.data.error,
       });
     }
   };
@@ -47,7 +51,32 @@ export const getProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SET_ERROR,
-      payload: error.message,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// *********  handel product review  ***************
+export const productReview = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_REVIEW_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { res } = await axios.put("/api/product/review", data, config);
+
+    dispatch({
+      type: NEW_REVIEW_SUCCESS,
+      payload: res.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_REVIEW_FAIL,
+      payload: error.response.data.error,
     });
   }
 };

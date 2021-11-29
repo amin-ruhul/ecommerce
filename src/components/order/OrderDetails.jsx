@@ -31,7 +31,9 @@ function OrderDetails({ match }) {
               <h1 className="my-5">Order # {order && order._id}</h1>
 
               <h4 className="mb-4">Shipping Info</h4>
-              <p>{/* <b>Name:</b> {order && order.user.name} */}</p>
+              <p>
+                <b>Name:</b> {order && order.user.name}
+              </p>
               <p>
                 <b>Phone:</b> {order && order.shippingInfo.phone}
               </p>
