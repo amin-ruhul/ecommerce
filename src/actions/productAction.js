@@ -1,6 +1,9 @@
 import {
   ALL_PRODUCT_REQUEST,
   ALL_PRODUCT_REQUEST_SUCCESS,
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_REQUEST_SUCCESS,
+  ADMIN_PRODUCT_REQUEST_FAIL,
   SET_PRODUCT,
   SET_ERROR,
   CLEAR_ERROR,
@@ -77,6 +80,25 @@ export const productReview = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_REVIEW_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// get all product from database without filter and pagination
+export const getAdminProduct = () => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_PRODUCT_REQUEST });
+
+    const { data } = await axios.get("/api/admin/products");
+
+    dispatch({
+      type: ADMIN_PRODUCT_REQUEST_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCT_REQUEST_FAIL,
       payload: error.response.data.error,
     });
   }

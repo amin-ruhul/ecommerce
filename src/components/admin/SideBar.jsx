@@ -13,17 +13,17 @@ function SideBar() {
           </li>
 
           <li>
-            <Link
-              to="/admin/products"
+            <a
+              href="#productSubmenu"
               data-toggle="collapse"
               aria-expanded="false"
               className="dropdown-toggle"
             >
               <i className="fa fa-product-hunt"></i> Products
-            </Link>
+            </a>
             <ul className="collapse list-unstyled" id="productSubmenu">
               <li>
-                <Link to="#">
+                <Link to="/admin/products">
                   <i className="fa fa-clipboard-list"></i> All
                 </Link>
               </li>

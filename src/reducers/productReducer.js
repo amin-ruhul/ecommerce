@@ -1,6 +1,9 @@
 import {
   ALL_PRODUCT_REQUEST,
   ALL_PRODUCT_REQUEST_SUCCESS,
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_REQUEST_SUCCESS,
+  ADMIN_PRODUCT_REQUEST_FAIL,
   SET_LOADING,
   SET_ERROR,
   SET_PRODUCT,
@@ -17,6 +20,7 @@ const initialState = {
   loading: false,
   product: null,
   isReviewSuccess: false,
+  adminProducts: null,
 };
 
 // eslint-disable-next-line
@@ -24,6 +28,7 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case ALL_PRODUCT_REQUEST:
+    case ADMIN_PRODUCT_REQUEST:
       return {
         loading: true,
         products: [],
@@ -34,6 +39,14 @@ export default (state = initialState, action) => {
         products: payload,
         loading: false,
       };
+
+    case ADMIN_PRODUCT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        adminProducts: payload,
+      };
+
     case SET_PRODUCT:
       return {
         ...state,
@@ -65,8 +78,10 @@ export default (state = initialState, action) => {
       };
     case SET_ERROR:
     case NEW_REVIEW_FAIL:
+    case ADMIN_PRODUCT_REQUEST_FAIL:
       return {
         ...state,
+        loading: false,
         error: payload,
       };
     case CLEAR_ERROR:
