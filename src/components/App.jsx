@@ -21,6 +21,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Success from "./cart/Success";
 import MyOrders from "./order/MyOrders";
 import OrderDetails from "./order/OrderDetails";
+import Dashboard from "./admin/Dashboard";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -62,7 +63,7 @@ function App() {
           )}
         </Switch>
       </div>
-
+      <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
       <Footer />
     </Router>
   );

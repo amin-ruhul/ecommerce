@@ -62,7 +62,7 @@ function NavBar() {
 
             <div className="dropdown-menu" aria-labelledby="dropDownMenuButton">
               {user && user.user.role === "admin" && (
-                <Link className="dropdown-item " to="/dashboard">
+                <Link className="dropdown-item " to="/admin/dashboard">
                   Dashboard
                 </Link>
               )}
