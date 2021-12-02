@@ -4,6 +4,9 @@ import {
   ADMIN_PRODUCT_REQUEST,
   ADMIN_PRODUCT_REQUEST_SUCCESS,
   ADMIN_PRODUCT_REQUEST_FAIL,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_REQUEST_SUCCESS,
+  CREATE_PRODUCT_REQUEST_FAIL,
   SET_LOADING,
   SET_ERROR,
   SET_PRODUCT,
@@ -76,9 +79,21 @@ export default (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case CREATE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_PRODUCT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        product: payload,
+      };
     case SET_ERROR:
     case NEW_REVIEW_FAIL:
     case ADMIN_PRODUCT_REQUEST_FAIL:
+    case CREATE_PRODUCT_REQUEST_FAIL:
       return {
         ...state,
         loading: false,
