@@ -7,7 +7,7 @@ function SideBar() {
       <nav id="sidebar">
         <ul className="list-unstyled components">
           <li>
-            <Link to="/dashboard">
+            <Link to="/admin/dashboard">
               <i className="fa fa-tachometer"></i> Dashboard
             </Link>
           </li>
