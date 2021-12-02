@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getAdminProduct, clearError } from "../../actions/productAction";
+import { getAdminProduct } from "../../actions/productAction";
 
 function Dashboard() {
   const dispatch = useDispatch();

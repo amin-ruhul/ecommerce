@@ -23,6 +23,7 @@ import MyOrders from "./order/MyOrders";
 import OrderDetails from "./order/OrderDetails";
 import Dashboard from "./admin/Dashboard";
 import ProductList from "./admin/ProductList";
+import NewProduct from "./admin/NewProduct";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -66,6 +67,7 @@ function App() {
       </div>
       <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
       <ProtectedRoute exact path="/admin/products" component={ProductList} />
+      <ProtectedRoute exact path="/admin/product/new" component={NewProduct} />
       <Footer />
     </Router>
   );

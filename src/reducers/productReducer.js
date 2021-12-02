@@ -89,6 +89,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         product: payload,
+        success: true,
       };
     case SET_ERROR:
     case NEW_REVIEW_FAIL:

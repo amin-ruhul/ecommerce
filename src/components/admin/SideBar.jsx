@@ -29,7 +29,7 @@ function SideBar() {
               </li>
 
               <li>
-                <Link to="/admin/product">
+                <Link to="/admin/product/new">
                   <i className="fa fa-plus"></i> Create
                 </Link>
               </li>
