@@ -25,6 +25,7 @@ import Dashboard from "./admin/Dashboard";
 import ProductList from "./admin/ProductList";
 import NewProduct from "./admin/NewProduct";
 import UpdateProduct from "./admin/UpdateProduct";
+import OrdersList from "./admin/OrderList";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -43,6 +44,7 @@ function App() {
   return (
     <Router>
       <NavBar />
+
       <div className="container container-fluid">
         <Switch>
           <Route exact path="/" component={Home} />
@@ -66,14 +68,22 @@ function App() {
           )}
         </Switch>
       </div>
-      <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
-      <ProtectedRoute exact path="/admin/products" component={ProductList} />
-      <ProtectedRoute exact path="/admin/product/new" component={NewProduct} />
-      <ProtectedRoute
-        exact
-        path="/admin/product/:id"
-        component={UpdateProduct}
-      />
+      <Switch>
+        <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
+        <ProtectedRoute exact path="/admin/products" component={ProductList} />
+        <ProtectedRoute exact path="/admin/orders" component={OrdersList} />
+        <ProtectedRoute
+          exact
+          path="/admin/product/new"
+          component={NewProduct}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/product/:id"
+          component={UpdateProduct}
+        />
+      </Switch>
+
       <Footer />
     </Router>
   );

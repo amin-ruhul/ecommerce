@@ -6,7 +6,6 @@ import SideBar from "./SideBar";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { newProduct, clearError } from "../../actions/productAction";
-// import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 
 const NewProduct = ({ history }) => {
   const [name, setName] = useState("");

@@ -14,6 +14,8 @@ function Login({ history, location }) {
   console.log(isAuthenticated, loading);
   const alert = useAlert();
 
+  console.log("Location", location);
+
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {

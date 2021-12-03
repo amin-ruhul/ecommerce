@@ -9,6 +9,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  LOAD_ALL_ORDER_REQUEST,
+  LOAD_ALL_ORDER_SUCCESS,
+  LOAD_ALL_ORDER_FAIL,
 } from "../actions/types";
 
 const initialSate = {
@@ -25,6 +28,7 @@ export default (state = initialSate, action) => {
     case CREATE_ORDER_REQUEST:
     case LOAD_ORDER_REQUEST:
     case ORDER_DETAILS_REQUEST:
+    case LOAD_ALL_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -39,6 +43,7 @@ export default (state = initialSate, action) => {
       };
     case CREATE_ORDER_FAIL:
     case LOAD_ORDER_FAIL:
+    case LOAD_ALL_ORDER_FAIL:
       return {
         ...state,
         loading: false,
@@ -52,6 +57,13 @@ export default (state = initialSate, action) => {
         loading: false,
         error: null,
         orders: payload,
+      };
+    case LOAD_ALL_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: payload.orders,
+        totalPrice: payload.totalPrice,
       };
     case CLEAR_ERROR:
       return {
