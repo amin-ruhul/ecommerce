@@ -28,6 +28,10 @@ function Home({ match }) {
     return <Loading />;
   }
 
+  if (!loading && products && products.length === 0) {
+    return <h1>No product found</h1>;
+  }
+
   return (
     <>
       <MetaData title="Buy the best product | My E-commerce" />
@@ -42,7 +46,7 @@ function Home({ match }) {
             ))}
         </div>
       </section>
-      {!loading && products && (
+      {!loading && products && products.length !== 0 && (
         <div className="d-flex justify-content-center mt-5">
           <Pagination
             activePage={currentPage}

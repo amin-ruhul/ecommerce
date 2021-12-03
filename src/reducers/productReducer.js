@@ -15,6 +15,9 @@ import {
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_FAIL,
   NEW_REVIEW_RESET,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_RESET,
 } from "../actions/types";
 
 const initialState = {
@@ -24,6 +27,7 @@ const initialState = {
   product: null,
   isReviewSuccess: false,
   adminProducts: null,
+  isDeleted: false,
 };
 
 // eslint-disable-next-line
@@ -91,10 +95,24 @@ export default (state = initialState, action) => {
         product: payload,
         success: true,
       };
+    case DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: payload,
+      };
+
+    case DELETE_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
     case SET_ERROR:
     case NEW_REVIEW_FAIL:
     case ADMIN_PRODUCT_REQUEST_FAIL:
     case CREATE_PRODUCT_REQUEST_FAIL:
+    case DELETE_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,

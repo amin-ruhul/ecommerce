@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAdminProduct, clearError } from "../../actions/productAction";
+import {
+  getAdminProduct,
+  clearError,
+  deleteProduct,
+} from "../../actions/productAction";
 import { useAlert } from "react-alert";
 import Loading from "../layout/Loading";
 import { MDBDataTable } from "mdbreact";
@@ -11,7 +15,7 @@ function ProductList() {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, adminProducts } = useSelector(
+  const { loading, error, adminProducts, isDeleted } = useSelector(
     (state) => state.products
   );
 
@@ -24,7 +28,15 @@ function ProductList() {
       alert.error(error);
       dispatch(clearError());
     }
-  }, [dispatch, alert, error]);
+
+    if (isDeleted) {
+      alert.success("product Deleted Successful");
+    }
+  }, [dispatch, alert, error, isDeleted]);
+
+  const handelClick = (id) => {
+    dispatch(deleteProduct(id));
+  };
 
   if (loading) return <Loading />;
 
@@ -76,7 +88,10 @@ function ProductList() {
               </Link>
 
               <button className="btn btn-danger py-1 px-2 ml-2">
-                <i className="fa fa-trash"></i>
+                <i
+                  className="fa fa-trash"
+                  onClick={() => handelClick(product._id)}
+                ></i>
               </button>
             </>
           ),

@@ -14,6 +14,8 @@ import {
   CREATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_REQUEST_SUCCESS,
   CREATE_PRODUCT_REQUEST_FAIL,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -119,15 +121,33 @@ export const newProduct = (productData) => async (dispatch) => {
       },
     };
 
-    const { data } = axios.post("/api/product", productData, config);
+    const { data } = await axios.post("/api/product", productData, config);
 
     dispatch({
       type: CREATE_PRODUCT_REQUEST_SUCCESS,
-      payload: data,
+      payload: data.data,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: CREATE_PRODUCT_REQUEST_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// ************ DELETE PRODUCT ****************
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.delete(`/api/product/${id}`);
+    console.log(data);
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
-      type: CREATE_PRODUCT_REQUEST_FAIL,
+      type: DELETE_PRODUCT_FAIL,
       payload: error.response.data.error,
     });
   }
