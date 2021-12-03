@@ -12,6 +12,9 @@ import {
   LOAD_ALL_ORDER_REQUEST,
   LOAD_ALL_ORDER_SUCCESS,
   LOAD_ALL_ORDER_FAIL,
+  DELETE_ORDER_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -93,6 +96,25 @@ export const getAllOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_ALL_ORDER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//*************  DELETE ORDER **************** */
+export const deleteOrder = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_ORDER_REQUEST });
+
+    const { data } = await axios.delete(`/api/admin/order/${id}`);
+
+    dispatch({
+      type: DELETE_ORDER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
       payload: error.response.data.error,
     });
   }

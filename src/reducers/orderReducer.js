@@ -12,6 +12,9 @@ import {
   LOAD_ALL_ORDER_REQUEST,
   LOAD_ALL_ORDER_SUCCESS,
   LOAD_ALL_ORDER_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
 } from "../actions/types";
 
 const initialSate = {
@@ -29,11 +32,17 @@ export default (state = initialSate, action) => {
     case LOAD_ORDER_REQUEST:
     case ORDER_DETAILS_REQUEST:
     case LOAD_ALL_ORDER_REQUEST:
+    case DELETE_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-
+    case DELETE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: true,
+      };
     case CREATE_ORDER_SUCCESS:
       return {
         ...state,
@@ -44,6 +53,7 @@ export default (state = initialSate, action) => {
     case CREATE_ORDER_FAIL:
     case LOAD_ORDER_FAIL:
     case LOAD_ALL_ORDER_FAIL:
+    case DELETE_ORDER_FAIL:
       return {
         ...state,
         loading: false,
