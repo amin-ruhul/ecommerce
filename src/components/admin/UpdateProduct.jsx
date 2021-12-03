@@ -5,22 +5,24 @@ import SideBar from "./SideBar";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { newProduct, clearError } from "../../actions/productAction";
-// import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
+import {
+  updateProduct,
+  clearError,
+  getProduct,
+} from "../../actions/productAction";
 
-const NewProduct = ({ history }) => {
+const UpdateProduct = ({ match, history }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState(0);
-  //const [seller, setSeller] = useState("");
   const [images, setImages] = useState([]);
+
+  const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
   const categories = [
-    "Select Categories",
-    "watch",
     "Electronics",
     "Cameras",
     "Laptops",
@@ -38,20 +40,35 @@ const NewProduct = ({ history }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.products);
+  const { loading, error, isUpdated, product } = useSelector(
+    (state) => state.products
+  );
+
+  const productId = match.params.id;
 
   useEffect(() => {
+    if (!product) {
+      dispatch(getProduct(productId));
+    } else {
+      setName(product.data.name);
+      setPrice(product.data.price);
+      setDescription(product.data.description);
+      setCategory(product.data.category);
+      setStock(product.data.stock);
+      setOldImages(product.data.images);
+    }
+
     if (error) {
       alert.error(error);
       dispatch(clearError());
     }
 
-    if (success) {
+    if (isUpdated) {
       history.push("/admin/products");
-      alert.success("Product created successfully");
-      //   dispatch({ type: NEW_PRODUCT_RESET });
+      alert.success("Product updated successfully");
+      //dispatch({ type: UPDATE_PRODUCT_RESET })
     }
-  }, [dispatch, alert, error, success, history]);
+  }, [dispatch, alert, error, isUpdated, history, product, productId]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -62,13 +79,12 @@ const NewProduct = ({ history }) => {
     formData.set("description", description);
     formData.set("category", category);
     formData.set("stock", stock);
-    //formData.set("seller", seller);
 
     images.forEach((image) => {
       formData.append("images", image);
     });
 
-    dispatch(newProduct(formData));
+    dispatch(updateProduct(product.data._id, formData));
   };
 
   const onChange = (e) => {
@@ -76,6 +92,7 @@ const NewProduct = ({ history }) => {
 
     setImagesPreview([]);
     setImages([]);
+    setOldImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -93,7 +110,7 @@ const NewProduct = ({ history }) => {
 
   return (
     <Fragment>
-      <MetaData title={"New Product"} />
+      <MetaData title={"Update Product"} />
       <div className="row">
         <div className="col-12 col-md-2">
           <SideBar />
@@ -107,7 +124,7 @@ const NewProduct = ({ history }) => {
                 onSubmit={submitHandler}
                 encType="multipart/form-data"
               >
-                <h1 className="mb-4">New Product</h1>
+                <h1 className="mb-4">Update Product</h1>
 
                 <div className="form-group">
                   <label htmlFor="name_field">Name</label>
@@ -185,6 +202,18 @@ const NewProduct = ({ history }) => {
                     </label>
                   </div>
 
+                  {oldImages &&
+                    oldImages.map((img) => (
+                      <img
+                        key={img._id}
+                        src={img.url}
+                        alt={img.url}
+                        className="mt-3 mr-2"
+                        width="55"
+                        height="52"
+                      />
+                    ))}
+
                   {imagesPreview.map((img) => (
                     <img
                       src={img}
@@ -203,7 +232,7 @@ const NewProduct = ({ history }) => {
                   className="btn btn-block py-3"
                   disabled={loading ? true : false}
                 >
-                  CREATE
+                  UPDATE
                 </button>
               </form>
             </div>
@@ -214,4 +243,4 @@ const NewProduct = ({ history }) => {
   );
 };
 
-export default NewProduct;
+export default UpdateProduct;

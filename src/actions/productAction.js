@@ -16,6 +16,9 @@ import {
   CREATE_PRODUCT_REQUEST_FAIL,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_REQUEST_SUCCESS,
+  UPDATE_PRODUCT_REQUEST_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -148,6 +151,32 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// **********     UPDATE PRODUCT     **************
+
+export const updateProduct = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`/api/product/${id}`, productData, config);
+
+    dispatch({
+      type: UPDATE_PRODUCT_REQUEST_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_REQUEST_FAIL,
       payload: error.response.data.error,
     });
   }

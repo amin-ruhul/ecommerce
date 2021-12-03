@@ -18,6 +18,9 @@ import {
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
   DELETE_RESET,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_REQUEST_SUCCESS,
+  UPDATE_PROFILE_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -28,6 +31,7 @@ const initialState = {
   isReviewSuccess: false,
   adminProducts: null,
   isDeleted: false,
+  isUpdated: false,
 };
 
 // eslint-disable-next-line
@@ -107,12 +111,24 @@ export default (state = initialState, action) => {
         ...state,
         isDeleted: false,
       };
+    case UPDATE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_PRODUCT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: payload,
+      };
 
     case SET_ERROR:
     case NEW_REVIEW_FAIL:
     case ADMIN_PRODUCT_REQUEST_FAIL:
     case CREATE_PRODUCT_REQUEST_FAIL:
     case DELETE_PRODUCT_FAIL:
+    case UPDATE_PROFILE_FAIL:
       return {
         ...state,
         loading: false,
