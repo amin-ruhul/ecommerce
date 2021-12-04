@@ -9,7 +9,6 @@ function OrderDetails({ match }) {
   const dispatch = useDispatch();
 
   const { loading, error, order } = useSelector((state) => state.order);
-  console.log("eee", order);
 
   useEffect(() => {
     dispatch(orderDetails(match.params.id));

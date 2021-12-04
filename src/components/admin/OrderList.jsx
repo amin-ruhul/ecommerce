@@ -37,7 +37,8 @@ const OrdersList = ({ history }) => {
       history.push("/admin/orders");
       //dispatch({ type: DELETE_ORDER_RESET })
     }
-  }, [dispatch, alert, error, history, isDeleted]);
+    // eslint-disable-next-line
+  }, []);
 
   const deleteOrderHandler = (id) => {
     dispatch(deleteOrder(id));

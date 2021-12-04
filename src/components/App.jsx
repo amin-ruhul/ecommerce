@@ -26,6 +26,7 @@ import ProductList from "./admin/ProductList";
 import NewProduct from "./admin/NewProduct";
 import UpdateProduct from "./admin/UpdateProduct";
 import OrdersList from "./admin/OrderList";
+import ProcessOrder from "./admin/ProcessOrder";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -69,15 +70,39 @@ function App() {
         </Switch>
       </div>
       <Switch>
-        <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
-        <ProtectedRoute exact path="/admin/products" component={ProductList} />
-        <ProtectedRoute exact path="/admin/orders" component={OrdersList} />
         <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/dashboard"
+          component={Dashboard}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/products"
+          component={ProductList}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/orders"
+          component={OrdersList}
+        />
+
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/order/:id"
+          component={ProcessOrder}
+        />
+        <ProtectedRoute
+          isAdmin={true}
           exact
           path="/admin/product/new"
           component={NewProduct}
         />
         <ProtectedRoute
+          isAdmin={true}
           exact
           path="/admin/product/:id"
           component={UpdateProduct}

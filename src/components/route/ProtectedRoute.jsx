@@ -16,9 +16,9 @@ function ProtectedRoute({ isAdmin, component: Component, ...rest }) {
               return <Redirect to="/login" />;
             }
 
-            // if (isAdmin === true && user.user.role !== "admin") {
-            //   return <Redirect to="/" />;
-            // }
+            if (isAdmin === true && user.user.role !== "admin") {
+              return <Redirect to="/" />;
+            }
 
             return <Component {...props} />;
           }}
