@@ -4,6 +4,7 @@ import SideBar from "./SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProduct } from "../../actions/productAction";
 import { getAllOrders } from "../../actions/orderAction";
+import { getAllUser } from "../../actions/userAction";
 import Loading from "../layout/Loading";
 
 function Dashboard() {
@@ -11,6 +12,7 @@ function Dashboard() {
 
   const { adminProducts } = useSelector((state) => state.products);
   const { loading, orders, totalPrice } = useSelector((state) => state.order);
+  const { users } = useSelector((state) => state.user);
 
   let outOfStock = 0;
   if (adminProducts) {
@@ -24,6 +26,7 @@ function Dashboard() {
   useEffect(() => {
     dispatch(getAdminProduct());
     dispatch(getAllOrders());
+    dispatch(getAllUser());
   }, [dispatch]);
 
   if (loading) {
@@ -98,7 +101,7 @@ function Dashboard() {
                 <div className="card-body">
                   <div className="text-center card-font-size">
                     Users
-                    <br /> <b>45</b>
+                    <br /> <b>{users && users.length}</b>
                   </div>
                 </div>
                 <a

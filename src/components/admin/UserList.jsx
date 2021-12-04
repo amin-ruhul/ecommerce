@@ -9,16 +9,16 @@ import SideBar from "./SideBar";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser, clearError } from "../../actions/userAction";
+import { getAllUser, clearError, deleteUser } from "../../actions/userAction";
 //import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
 const UserList = ({ history }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, users } = useSelector((state) => state.user);
-
-  console.log("User", users);
+  const { loading, error, users, isDeleted } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
     dispatch(getAllUser());
@@ -28,17 +28,17 @@ const UserList = ({ history }) => {
       dispatch(clearError());
     }
 
-    // if (isDeleted) {
-    //   alert.success("Order deleted successfully");
-    //   history.push("/admin/orders");
-    //   //dispatch({ type: DELETE_ORDER_RESET })
-    // }
+    if (isDeleted) {
+      alert.success("User deleted successfully");
+      //history.push("/admin/orders");
+      //dispatch({ type: DELETE_ORDER_RESET })
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [isDeleted]);
 
-  //   const deleteOrderHandler = (id) => {
-  //     dispatch(deleteOrder(id));
-  //   };
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id));
+  };
 
   const setUsers = () => {
     const data = {
@@ -81,12 +81,15 @@ const UserList = ({ history }) => {
           actions: (
             <Fragment>
               <Link
-                to={`/admin/order/${user._id}`}
+                to={`/admin/user/${user._id}`}
                 className="btn btn-primary py-1 px-2"
               >
                 <i className="fa fa-eye"></i>
               </Link>
-              <button className="btn btn-danger py-1 px-2 ml-2">
+              <button
+                className="btn btn-danger py-1 px-2 ml-2"
+                onClick={() => deleteUserHandler(user._id)}
+              >
                 <i className="fa fa-trash"></i>
               </button>
             </Fragment>

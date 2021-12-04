@@ -28,6 +28,7 @@ import UpdateProduct from "./admin/UpdateProduct";
 import OrdersList from "./admin/OrderList";
 import ProcessOrder from "./admin/ProcessOrder";
 import UserList from "./admin/UserList";
+import UpdateUser from "./admin/UpdateUser";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
@@ -114,6 +115,13 @@ function App() {
           exact
           path="/admin/users"
           component={UserList}
+        />
+
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/user/:id"
+          component={UpdateUser}
         />
       </Switch>
 
