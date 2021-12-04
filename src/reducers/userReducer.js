@@ -3,18 +3,41 @@ import {
   UPDATE_PROFILE_SUCCESS,
   CLEAR_ERROR,
   UPDATE_PROFILE_RESET,
+  LOAD_ALL_USER_FAIL,
+  LOAD_ALL_USER_SUCCESS,
+  LOAD_ALL_USER_REQUEST,
 } from "../actions/types";
 
 const initialState = {
   loading: true,
   error: null,
   isUpdated: false,
+  users: [],
 };
 
 // eslint-disable-next-line
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case LOAD_ALL_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LOAD_ALL_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: payload,
+      };
+    case LOAD_ALL_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        users: [],
+        error: payload,
+      };
     case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
