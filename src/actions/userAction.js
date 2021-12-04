@@ -12,6 +12,9 @@ import {
   LOAD_SINGLE_USER_FAIL,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
 } from "./types";
 
 //*************load all user(ADMIN) *******************/
@@ -43,6 +46,32 @@ export const getUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_SINGLE_USER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//************** Update user(Admin) **************** */
+
+export const updateUser = (id, userData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`/api/admin/user/${id}`, userData, config);
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
       payload: error.response.data.error,
     });
   }

@@ -11,6 +11,9 @@ import {
   LOAD_SINGLE_USER_FAIL,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +29,7 @@ export default (state = initialState, action) => {
   switch (type) {
     case LOAD_ALL_USER_REQUEST:
     case LOAD_SINGLE_USER_REQUEST:
+    case UPDATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -50,9 +54,16 @@ export default (state = initialState, action) => {
         loading: false,
         isDeleted: true,
       };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: payload,
+      };
     case LOAD_ALL_USER_FAIL:
     case LOAD_SINGLE_USER_FAIL:
     case DELETE_USER_FAIL:
+    case UPDATE_USER_FAIL:
       return {
         ...state,
         loading: false,
