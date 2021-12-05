@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { getUser, clearError, updateUser } from "../../actions/userAction";
+import { UPDATE_PROFILE_RESET } from "../../actions/types";
 import Loading from "../layout/Loading";
 
 function UpdateUser({ match, history }) {
@@ -36,7 +37,7 @@ function UpdateUser({ match, history }) {
     if (isUpdated) {
       alert.success("User Updated successfully");
       history.push("/admin/users");
-      //dispatch({ type: DELETE_ORDER_RESET })
+      dispatch({ type: UPDATE_PROFILE_RESET });
     }
     // eslint-disable-next-line
   }, [dispatch, alert, error, match.params.id, isUpdated]);

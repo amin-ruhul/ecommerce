@@ -10,7 +10,7 @@ import SideBar from "./SideBar";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser, clearError, deleteUser } from "../../actions/userAction";
-//import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
+import { DELETE_USER_RESET } from "../../actions/types";
 
 const UserList = ({ history }) => {
   const alert = useAlert();
@@ -30,8 +30,7 @@ const UserList = ({ history }) => {
 
     if (isDeleted) {
       alert.success("User deleted successfully");
-      //history.push("/admin/orders");
-      //dispatch({ type: DELETE_ORDER_RESET })
+      dispatch({ type: DELETE_USER_RESET });
     }
     // eslint-disable-next-line
   }, [isDeleted]);

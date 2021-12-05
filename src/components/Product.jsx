@@ -9,7 +9,10 @@ function Product({ product }) {
         <img className="card-img-top mx-auto" alt="" src={images[0].url} />
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">
-            <Link to={`/product/${_id}`}> {name}</Link>
+            <Link to={`/product/${_id}`}>
+              {" "}
+              {name.slice(0, 25)} {name.length > 20 && "..."}
+            </Link>
           </h5>
           <div className="ratings mt-auto">
             <div className="rating-outer">

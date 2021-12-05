@@ -146,7 +146,7 @@ function Payment({ history }) {
             </div>
 
             <button id="pay_btn" type="submit" className="btn btn-block py-3">
-              Pay ${orderInfo && orderInfo.total}
+              Pay ${orderInfo && orderInfo.total.toFixed(2)}
             </button>
           </form>
         </div>

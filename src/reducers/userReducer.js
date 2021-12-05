@@ -11,6 +11,7 @@ import {
   LOAD_SINGLE_USER_FAIL,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  DELETE_USER_RESET,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
@@ -20,6 +21,7 @@ const initialState = {
   loading: true,
   error: null,
   isUpdated: false,
+  isDeleted: false,
   users: [],
 };
 
@@ -52,7 +54,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isDeleted: true,
+        isDeleted: payload,
+      };
+    case DELETE_USER_RESET:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: false,
       };
     case UPDATE_USER_SUCCESS:
       return {

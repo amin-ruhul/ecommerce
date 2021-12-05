@@ -35,7 +35,6 @@ function Home({ match }) {
   return (
     <>
       <MetaData title="Buy the best product | My E-commerce" />
-      <h1 id="products_heading">Latest Products</h1>
 
       <section id="products" className="container mt-5">
         <div className="row">
