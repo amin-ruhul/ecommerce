@@ -1,15 +1,17 @@
-# Getting Started with Create React App
+# MERN E-COMMERCE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Usage
 
-## Available Scripts
+### Install Dependencies
 
-In the project directory, you can run:
+```
+npm install
+```
 
-### `npm start`
+### Run
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Backend Code: [amin-ruhul/e-commerce-api](https://github.com/amin-ruhul/e-commerce-api)
