@@ -500,8 +500,10 @@ footer {
 #sidebar {
   min-width: 100%;
   max-width: 100%;
+  height: 100%;
   background: #232f3e;
   color: #fff;
+
   transition: all 0.3s;
 }
 #sidebar.active {

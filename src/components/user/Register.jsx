@@ -12,7 +12,9 @@ function Register({ history }) {
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/images/profile.png");
   const dispatch = useDispatch();
-  const { error, isAuthenticated } = useSelector((state) => state.auth);
+  const { error, isAuthenticated, loading } = useSelector(
+    (state) => state.auth
+  );
   const alert = useAlert();
   const { name, email, password } = user;
 
@@ -22,6 +24,7 @@ function Register({ history }) {
     }
 
     if (error) {
+      if (error === "Not Authorize") return;
       alert.error(error);
       dispatch(clearError());
     }
@@ -126,20 +129,30 @@ function Register({ history }) {
                   accept="images/*"
                   onChange={handelAvatar}
                 />
-                <label className="custom-file-label" for="customFile">
+                <label className="custom-file-label" htmlFor="customFile">
                   Choose Avatar
                 </label>
               </div>
             </div>
           </div>
-
-          <button
-            id="register_button"
-            type="submit"
-            className="btn btn-block py-3"
-          >
-            REGISTER
-          </button>
+          {!loading && (
+            <button
+              id="register_button"
+              type="submit"
+              className="btn btn-block py-3"
+            >
+              REGISTER
+            </button>
+          )}
+          {loading && (
+            <button
+              id="register_button"
+              className="btn btn-block py-3"
+              disabled
+            >
+              Requesting...
+            </button>
+          )}
         </form>
       </div>
     </div>

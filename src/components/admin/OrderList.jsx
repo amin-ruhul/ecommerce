@@ -14,7 +14,7 @@ import {
   clearError,
   deleteOrder,
 } from "../../actions/orderAction";
-//import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
+import { DELETE_ORDER_RESET } from "../../actions/types";
 
 const OrdersList = ({ history }) => {
   const alert = useAlert();
@@ -34,8 +34,9 @@ const OrdersList = ({ history }) => {
 
     if (isDeleted) {
       alert.success("Order deleted successfully");
+
       history.push("/admin/orders");
-      //dispatch({ type: DELETE_ORDER_RESET })
+      dispatch({ type: DELETE_ORDER_RESET });
     }
     // eslint-disable-next-line
   }, []);
@@ -79,7 +80,7 @@ const OrdersList = ({ history }) => {
       data.rows.push({
         id: order._id,
         numofItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `$${order.totalPrice.toFixed(2)}`,
         status:
           order.orderStatus &&
           String(order.orderStatus).includes("Delivered") ? (

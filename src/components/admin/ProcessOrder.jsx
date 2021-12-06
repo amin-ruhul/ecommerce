@@ -1,15 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import { orderDetails, clearError } from "../../actions/orderAction";
+import {
+  orderDetails,
+  clearError,
+  updateOrder,
+} from "../../actions/orderAction";
 import Loading from "../layout/Loading";
+import { UPDATE_ORDER_RESET } from "../../actions/types";
 
-function ProcessOrder({ match }) {
+function ProcessOrder({ match, history }) {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const [status, setStatus] = useState("");
 
-  const { loading, error, order } = useSelector((state) => state.order);
+  const { loading, error, order, isUpdated } = useSelector(
+    (state) => state.order
+  );
+
+  console.log("My Order", order);
+
+  useEffect(() => {
+    if (order) {
+      setStatus(order.orderStatus);
+    }
+  }, [order]);
 
   useEffect(() => {
     dispatch(orderDetails(match.params.id));
@@ -18,7 +34,20 @@ function ProcessOrder({ match }) {
       alert.error(error);
       dispatch(clearError());
     }
-  }, [dispatch, alert, error, match.params.id]);
+
+    if (isUpdated) {
+      alert.success("Update successfully");
+      dispatch({ type: UPDATE_ORDER_RESET });
+      history.push("/admin/orders");
+    }
+  }, [dispatch, alert, error, match.params.id, isUpdated, history]);
+
+  const handelOrderProcess = (id) => {
+    const formData = new FormData();
+    formData.set("status", status);
+
+    dispatch(updateOrder(id, formData));
+  };
 
   if (loading) return <Loading />;
 
@@ -35,7 +64,7 @@ function ProcessOrder({ match }) {
 
               <h4 className="mb-4">Shipping Info</h4>
               <p>
-                <b>Name:</b> {order && order.user.name}
+                <b>Name:</b> {order.user ? order.user.name : ""}
               </p>
               <p>
                 <b>Phone:</b> {order && order.shippingInfo.phone}
@@ -113,14 +142,23 @@ function ProcessOrder({ match }) {
               <h4 className="my-4">Status</h4>
 
               <div className="form-group">
-                <select className="form-control" name="status">
+                <select
+                  className="form-control"
+                  name="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
                   <option value="Processing">Processing</option>
                   <option value="Shipped">Shipped</option>
                   <option value="Delivered">Delivered</option>
                 </select>
               </div>
 
-              <button className="btn btn-primary btn-block">
+              <button
+                className="btn btn-primary btn-block"
+                type="submit"
+                onClick={() => handelOrderProcess(order._id)}
+              >
                 Update Status
               </button>
             </div>

@@ -6,6 +6,7 @@ import {
   CLEAR_ERROR,
   REGISTER_USER,
   REGISTER_FAIL,
+  REGISTER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
   LOGOUT,
@@ -43,6 +44,8 @@ export const login = (email, password) => async (dispatch) => {
 //************** Register user ******************** */
 export const register = (userData) => async (dispatch) => {
   try {
+    dispatch({ type: REGISTER_REQUEST });
+
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",

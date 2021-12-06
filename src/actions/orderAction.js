@@ -41,7 +41,7 @@ export const createNewOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.error,
     });
   }
 };
@@ -60,7 +60,7 @@ export const getMyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.error,
     });
   }
 };
@@ -78,9 +78,10 @@ export const orderDetails = (id) => async (dispatch) => {
       payload: data.order,
     });
   } catch (error) {
+    console.log(error.response);
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.error,
     });
   }
 };
@@ -132,7 +133,11 @@ export const updateOrder = (id, updatedData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.put(`/api/order/${id}`, updatedData, config);
+    const { data } = await axios.put(
+      `/api/admin/order/${id}`,
+      updatedData,
+      config
+    );
     dispatch({
       type: UPDATE_ORDER_SUCCESS,
       payload: data.success,

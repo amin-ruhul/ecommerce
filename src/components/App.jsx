@@ -32,7 +32,6 @@ import UpdateUser from "./admin/UpdateUser";
 
 function App() {
   const [stripeApiKay, setStripeApiKay] = useState("");
-  console.log("Api", stripeApiKay);
 
   const getStripeApiKey = async () => {
     const { data } = await axios.get("/api/payment/stripe/key");

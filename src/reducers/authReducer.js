@@ -5,6 +5,7 @@ import {
   CLEAR_ERROR,
   REGISTER_USER,
   REGISTER_FAIL,
+  REGISTER_REQUEST,
   LOAD_USER_FAIL,
   LOAD_USER_SUCCESS,
   LOGOUT,
@@ -23,6 +24,7 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case LOGIN_REQUEST:
+    case REGISTER_REQUEST:
       return {
         ...state,
         loading: true,

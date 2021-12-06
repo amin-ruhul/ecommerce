@@ -15,6 +15,11 @@ import {
   DELETE_ORDER_REQUEST,
   DELETE_ORDER_SUCCESS,
   DELETE_ORDER_FAIL,
+  UPDATE_ORDER_RESET,
+  UPDATE_ORDER_REQUEST,
+  UPDATE_ORDER_SUCCESS,
+  UPDATE_ORDER_FAIL,
+  DELETE_ORDER_RESET,
 } from "../actions/types";
 
 const initialSate = {
@@ -33,6 +38,7 @@ export default (state = initialSate, action) => {
     case ORDER_DETAILS_REQUEST:
     case LOAD_ALL_ORDER_REQUEST:
     case DELETE_ORDER_REQUEST:
+    case UPDATE_ORDER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -50,10 +56,29 @@ export default (state = initialSate, action) => {
         error: null,
         order: payload,
       };
+    case UPDATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: payload,
+      };
+    case UPDATE_ORDER_RESET:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: false,
+      };
+    case DELETE_ORDER_RESET:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: false,
+      };
     case CREATE_ORDER_FAIL:
     case LOAD_ORDER_FAIL:
     case LOAD_ALL_ORDER_FAIL:
     case DELETE_ORDER_FAIL:
+    case UPDATE_ORDER_FAIL:
       return {
         ...state,
         loading: false,
@@ -86,7 +111,6 @@ export default (state = initialSate, action) => {
         ...state,
         loading: false,
         error: payload,
-        order: null,
       };
     case ORDER_DETAILS_SUCCESS:
       return {

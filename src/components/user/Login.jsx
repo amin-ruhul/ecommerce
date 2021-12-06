@@ -24,6 +24,7 @@ function Login({ history, location }) {
     }
 
     if (error) {
+      if (error === "Not Authorize") return;
       alert.error(error);
       dispatch(clearError());
     }
