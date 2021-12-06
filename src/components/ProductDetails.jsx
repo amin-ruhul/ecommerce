@@ -194,9 +194,6 @@ function ProductDetails({ match }) {
               <h4 className="mt-2">Description:</h4>
               <p>{product.data.description}</p>
               <hr />
-              <p id="product_seller mb-3">
-                Sold by: <strong>Amazon</strong>
-              </p>
 
               {isAuthenticated ? (
                 <button

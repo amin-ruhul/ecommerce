@@ -22,14 +22,14 @@ function Profile() {
                   alt={user.user && user.user.name}
                 />
               </figure>
-              <Link
+              {/* <Link
                 to="/edit/profile"
                 href="#"
                 id="edit_profile"
                 className="btn btn-primary btn-block my-5"
               >
                 Edit Profile
-              </Link>
+              </Link> */}
             </div>
 
             <div className="col-12 col-md-5">
@@ -40,17 +40,17 @@ function Profile() {
               <p>{user.user && user.user.email}</p>
 
               {user.user.role === "user" && (
-                <Link to="/myorder" className="btn btn-danger btn-block mt-5">
+                <Link to="/orders" className="btn btn-danger btn-block mt-5">
                   My Orders
                 </Link>
               )}
 
-              <Link
+              {/* <Link
                 to="/change/password"
                 className="btn btn-primary btn-block mt-3"
               >
                 Change Password
-              </Link>
+              </Link> */}
             </div>
           </div>
         </>
