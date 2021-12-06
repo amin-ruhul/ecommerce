@@ -11,10 +11,7 @@ function Login({ history, location }) {
   const { error, isAuthenticated, loading } = useSelector(
     (state) => state.auth
   );
-  console.log(isAuthenticated, loading);
   const alert = useAlert();
-
-  console.log("Location", location);
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -62,13 +59,21 @@ function Login({ history, location }) {
             />
           </div>
 
-          <button
-            id="login_button"
-            type="submit"
-            className="btn btn-block py-3"
-          >
-            LOGIN
-          </button>
+          {!loading && (
+            <button
+              id="login_button"
+              type="submit"
+              className="btn btn-block py-3"
+            >
+              LOGIN
+            </button>
+          )}
+
+          {loading && (
+            <button id="login_button" className="btn btn-block py-3" disabled>
+              Requesting...
+            </button>
+          )}
 
           <Link to="/register" className="float-right mt-3">
             New User?
