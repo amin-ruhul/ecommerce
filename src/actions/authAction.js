@@ -13,6 +13,7 @@ import {
 } from "./types";
 
 //********************login user *************** */
+
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -28,6 +29,7 @@ export const login = (email, password) => async (dispatch) => {
     const data = { email, password };
     await axios.post("/api/user/login", data, config);
     const res = await axios.get("/api/user");
+    //console.log("login", res);
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -36,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SET_ERROR,
-      payload: error.response.data.error,
+      payload: error.response.data.message,
     });
   }
 };
