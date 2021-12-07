@@ -19,8 +19,6 @@ function ProductList() {
     (state) => state.products
   );
 
-  console.log("admin products", adminProducts);
-
   useEffect(() => {
     dispatch(getAdminProduct());
 
